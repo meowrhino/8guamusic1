@@ -34,23 +34,31 @@
             text-align: center;
         }
 
-        .bagua-button {
+        .bagua-button-text {
             position: fixed;
-            top: 40%;
-            background: #111;
+            background: none;
             color: white;
-            border: 1px solid white;
-            padding: 0.5rem 1rem;
-            cursor: pointer;
+            border: none;
+            padding: 0;
             font-family: inherit;
+            font-size: 0.8rem;
+            writing-mode: vertical-rl;
+            text-orientation: mixed;
+            cursor: pointer;
         }
 
         #btn-bagua-prev {
             left: 0;
+            top: 0;
+            height: 100%;
         }
 
         #btn-bagua-next {
             right: 0;
+            bottom: 0;
+            height: 100%;
+            writing-mode: vertical-lr;
+            text-orientation: mixed;
         }
 
         .bagua-popup {
@@ -91,8 +99,8 @@
 </head>
 
 <body>
-    <button id="btn-bagua-prev" class="bagua-button" onclick="togglePopup('popupPrev')">CIELO ANTERIOR</button>
-    <button id="btn-bagua-next" class="bagua-button" onclick="togglePopup('popupNext')">CIELO POSTERIOR</button>
+    <button id="btn-bagua-prev" class="bagua-button-text" onclick="togglePopup('popupPrev')">BAGUA<br>ANTERIOR</button>
+    <button id="btn-bagua-next" class="bagua-button-text" onclick="togglePopup('popupNext')">BAGUA<br>POSTERIOR</button>
 
     <div class="bagua-popup" id="popupPrev">
         <div class="bagua-circle">
@@ -195,11 +203,6 @@
             const parsed = document.getElementById(`${id}-parsed`);
             const raw = input.value.trim().toUpperCase();
             const notes = raw.match(/([A-G](#|B|b)?)/g);
-            if (notes && notes.length === 3) {
-                parsed.innerText = `Acorde construido: ${notes.join(' - ')}`;
-            } else {
-                parsed.innerText = '';
-            }
 
             if (notes && notes.length === 3) {
                 parsed.innerText = `Acorde construido: ${notes.join(' - ')}`;
@@ -208,7 +211,6 @@
             }
         }
 
-        // Generar por defecto al cargar
         generateTrigrams();
     </script>
 </body>
