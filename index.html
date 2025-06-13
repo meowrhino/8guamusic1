@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Generador Musical I Ching</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 2rem;
+      background: #0b0b0b;
+      color: white;
+      font-family: "Courier New", monospace;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 2rem;
+    }
+
+    #trigram-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+      justify-content: center;
+    }
+
+    .trigram-card {
+      border: 1px solid #fff;
+      padding: 1rem;
+      border-radius: 0.5rem;
+      background: rgba(255, 255, 255, 0.05);
+      width: 180px;
+      text-align: center;
+    }
+
+    .bagua-hidden {
+      position: fixed;
+      top: 0;
+      height: 100%;
+      width: 60px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      font-size: 10px;
+      opacity: 0.2;
+    }
+
+    #bagua-previous {
+      left: 0;
+    }
+
+    #bagua-next {
+      right: 0;
+    }
+
+    select, button, input[type="number"] {
+      background: black;
+      color: white;
+      border: 1px solid white;
+      padding: 0.5rem;
+      font-family: inherit;
+    }
+  </style>
+</head>
+<body>
+  <div id="bagua-previous" class="bagua-hidden">
+    <!-- Bagua del cielo anterior (inspiración) -->
+    ☰ ☱ ☲ ☳ ☴ ☵ ☶ ☷
+  </div>
+
+  <h1>I Ching Generator</h1>
+
+  <div>
+    <label>Número de acordes:</label>
+    <input type="number" id="chord-count" value="4" min="1" max="64">
+    <label>Grupo:</label>
+    <select id="group-size">
+      <option value="4">4</option>
+      <option value="8">8</option>
+      <option value="16">16</option>
+      <option value="20">20</option>
+    </select>
+    <button onclick="generateTrigrams()">Generar</button>
+  </div>
+
+  <div id="trigram-list"></div>
+
+  <div id="bagua-next" class="bagua-hidden">
+    <!-- Bagua del cielo posterior (despliegue) -->
+    ☰ ☱ ☲ ☳ ☴ ☵ ☶ ☷
+  </div>
+
+  <script>
+    const trigramMap = {
+      '☰': { name: 'Cielo', lines: '⚊⚊⚊', qualities: ['3M', '5P', '7M'] },
+      '☱': { name: 'Lago', lines: '⚊⚊⚋', qualities: ['3M', '5P', '7m'] },
+      '☲': { name: 'Fuego', lines: '⚊⚋⚊', qualities: ['3M', '5d', '7M'] },
+      '☳': { name: 'Trueno', lines: '⚋⚊⚊', qualities: ['3m', '5P', '7M'] },
+      '☵': { name: 'Agua', lines: '⚊⚋⚋', qualities: ['3M', '5d', '7m'] },
+      '☶': { name: 'Montaña', lines: '⚋⚋⚊', qualities: ['3m', '5d', '7M'] },
+      '☴': { name: 'Viento', lines: '⚋⚊⚋', qualities: ['3m', '5P', '7m'] },
+      '☷': { name: 'Tierra', lines: '⚋⚋⚋', qualities: ['3m', '5d', '7d'] },
+    };
+
+    const trigrams = Object.keys(trigramMap);
+
+    function generateTrigrams() {
+      const list = document.getElementById("trigram-list");
+      list.innerHTML = "";
+
+      const count = parseInt(document.getElementById("chord-count").value);
+      const groupSize = parseInt(document.getElementById("group-size").value);
+
+      for (let i = 0; i < count; i++) {
+        const randTrigram = trigrams[Math.floor(Math.random() * trigrams.length)];
+        const trigram = trigramMap[randTrigram];
+
+        const div = document.createElement("div");
+        div.className = "trigram-card";
+        div.innerHTML = `
+          <div style="font-size: 2rem;">${randTrigram}</div>
+          <div><strong>${trigram.name}</strong></div>
+          <div>${trigram.lines}</div>
+          <div>Acorde modal: ${trigram.qualities.join(" - ")}</div>
+          <div>Notas reales: <input placeholder="Escribe aquí..." /></div>
+        `;
+        list.appendChild(div);
+
+        if ((i + 1) % groupSize === 0) {
+          const divider = document.createElement("hr");
+          divider.style.width = "100%";
+          divider.style.opacity = 0.2;
+          list.appendChild(divider);
+        }
+      }
+    }
+
+    // Generar por defecto al cargar
+    generateTrigrams();
+  </script>
+</body>
+</html>
