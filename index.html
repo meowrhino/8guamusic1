@@ -1,143 +1,177 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Generador Musical I Ching</title>
-  <style>
-    body {
-      margin: 0;
-      padding: 2rem;
-      background: #0b0b0b;
-      color: white;
-      font-family: "Courier New", monospace;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 2rem;
-    }
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Generador Musical I Ching</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 2rem;
+            background: #0b0b0b;
+            color: white;
+            font-family: "Courier New", monospace;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 2rem;
+        }
 
-    #trigram-list {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 1rem;
-      justify-content: center;
-    }
+        #trigram-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            justify-content: center;
+        }
 
-    .trigram-card {
-      border: 1px solid #fff;
-      padding: 1rem;
-      border-radius: 0.5rem;
-      background: rgba(255, 255, 255, 0.05);
-      width: 180px;
-      text-align: center;
-    }
+        .trigram-card {
+            border: 1px solid #fff;
+            padding: 1rem;
+            border-radius: 0.5rem;
+            background: rgba(255, 255, 255, 0.05);
+            width: 180px;
+            text-align: center;
+        }
 
-    .bagua-button {
-      position: fixed;
-      top: 40%;
-      background: #111;
-      color: white;
-      border: 1px solid white;
-      padding: 0.5rem 1rem;
-      cursor: pointer;
-      font-family: inherit;
-    }
+        .bagua-button {
+            position: fixed;
+            top: 40%;
+            background: #111;
+            color: white;
+            border: 1px solid white;
+            padding: 0.5rem 1rem;
+            cursor: pointer;
+            font-family: inherit;
+        }
 
-    #btn-bagua-prev {
-      left: 0;
-    }
-    #btn-bagua-next {
-      right: 0;
-    }
+        #btn-bagua-prev {
+            left: 0;
+        }
 
-    .bagua-popup {
-      display: none;
-      position: fixed;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      background: black;
-      border: 1px solid white;
-      padding: 2rem;
-      z-index: 100;
-    }
+        #btn-bagua-next {
+            right: 0;
+        }
 
-    .note-input {
-      margin-top: 0.5rem;
-      padding: 0.3rem;
-      font-family: inherit;
-      width: 100%;
-      text-align: center;
-      background: #1a1a1a;
-      color: white;
-      border: 1px solid #888;
-      border-radius: 4px;
-    }
-  </style>
+        .bagua-popup {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: black;
+            border: 1px solid white;
+            padding: 2rem;
+            z-index: 100;
+            text-align: center;
+        }
+
+        .bagua-circle {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            grid-template-rows: repeat(3, 1fr);
+            gap: 0.5rem;
+            justify-items: center;
+            align-items: center;
+            font-size: 1.5rem;
+        }
+
+        .note-input {
+            margin-top: 0.5rem;
+            padding: 0.3rem;
+            font-family: inherit;
+            width: 100%;
+            text-align: center;
+            background: #1a1a1a;
+            color: white;
+            border: 1px solid #888;
+            border-radius: 4px;
+        }
+    </style>
 </head>
+
 <body>
-  <button id="btn-bagua-prev" class="bagua-button" onclick="togglePopup('popupPrev')">CIELO ANTERIOR</button>
-  <button id="btn-bagua-next" class="bagua-button" onclick="togglePopup('popupNext')">CIELO POSTERIOR</button>
+    <button id="btn-bagua-prev" class="bagua-button" onclick="togglePopup('popupPrev')">CIELO ANTERIOR</button>
+    <button id="btn-bagua-next" class="bagua-button" onclick="togglePopup('popupNext')">CIELO POSTERIOR</button>
 
-  <div class="bagua-popup" id="popupPrev">
-    <p>☰ ☱ ☲ ☳ ☴ ☵ ☶ ☷<br>Ho Tu: Cielo Anterior<br><button onclick="togglePopup('popupPrev')">Cerrar</button></p>
-  </div>
-  <div class="bagua-popup" id="popupNext">
-    <p>☷ ☶ ☵ ☴ ☳ ☲ ☱ ☰<br>Lo Shu: Cielo Posterior<br><button onclick="togglePopup('popupNext')">Cerrar</button></p>
-  </div>
+    <div class="bagua-popup" id="popupPrev">
+        <div class="bagua-circle">
+            <div>☱</div>
+            <div>☰</div>
+            <div>☲</div>
+            <div>☶</div>
+            <div></div>
+            <div>☳</div>
+            <div>☷</div>
+            <div>☵</div>
+            <div>☴</div>
+        </div>
+        <p>Ho Tu: Cielo Anterior</p>
+        <button onclick="togglePopup('popupPrev')">Cerrar</button>
+    </div>
 
-  <h1>I Ching Generator</h1>
+    <div class="bagua-popup" id="popupNext">
+        <div class="bagua-circle">
+            <div>☴</div>
+            <div>☷</div>
+            <div>☵</div>
+            <div>☳</div>
+            <div></div>
+            <div>☶</div>
+            <div>☲</div>
+            <div>☱</div>
+            <div>☰</div>
+        </div>
+        <p>Lo Shu: Cielo Posterior</p>
+        <button onclick="togglePopup('popupNext')">Cerrar</button>
+    </div>
 
-  <div>
-    <label>Número de acordes:</label>
-    <input type="number" id="chord-count" value="4" min="1" max="64">
-    <label>Grupo:</label>
-    <select id="group-size" onchange="generateTrigrams()">
-      <option value="4">4</option>
-      <option value="8">8</option>
-      <option value="16">16</option>
-      <option value="20">20</option>
-    </select>
-    <button onclick="generateTrigrams()">Generar</button>
-  </div>
+    <h1>I Ching Generator</h1>
 
-  <div id="trigram-list"></div>
+    <div>
+        <label>Número de acordes:</label>
+        <input type="number" id="chord-count" value="4" min="1" max="64">
+        <label>Agrupar cada:</label>
+        <input type="number" id="group-size" value="4" min="1" max="64" onchange="generateTrigrams()">
+        <button onclick="generateTrigrams()">Generar</button>
+    </div>
 
-  <script>
-    const trigramMap = {
-      '☰': { name: 'Cielo', lines: '⚊⚊⚊', qualities: ['3M', '5P', '7M'] },
-      '☱': { name: 'Lago', lines: '⚊⚊⚋', qualities: ['3M', '5P', '7m'] },
-      '☲': { name: 'Fuego', lines: '⚊⚋⚊', qualities: ['3M', '5d', '7M'] },
-      '☳': { name: 'Trueno', lines: '⚋⚊⚊', qualities: ['3m', '5P', '7M'] },
-      '☵': { name: 'Agua', lines: '⚊⚋⚋', qualities: ['3M', '5d', '7m'] },
-      '☶': { name: 'Montaña', lines: '⚋⚋⚊', qualities: ['3m', '5d', '7M'] },
-      '☴': { name: 'Viento', lines: '⚋⚊⚋', qualities: ['3m', '5P', '7m'] },
-      '☷': { name: 'Tierra', lines: '⚋⚋⚋', qualities: ['3m', '5d', '7d'] },
-    };
+    <div id="trigram-list"></div>
 
-    const trigrams = Object.keys(trigramMap);
+    <script>
+        const trigramMap = {
+            '☰': { name: 'Cielo', lines: '⚊⚊⚊', qualities: ['3M', '5P', '7M'] },
+            '☱': { name: 'Lago', lines: '⚊⚊⚋', qualities: ['3M', '5P', '7m'] },
+            '☲': { name: 'Fuego', lines: '⚊⚋⚊', qualities: ['3M', '5d', '7M'] },
+            '☳': { name: 'Trueno', lines: '⚋⚊⚊', qualities: ['3m', '5P', '7M'] },
+            '☵': { name: 'Agua', lines: '⚊⚋⚋', qualities: ['3M', '5d', '7m'] },
+            '☶': { name: 'Montaña', lines: '⚋⚋⚊', qualities: ['3m', '5d', '7M'] },
+            '☴': { name: 'Viento', lines: '⚋⚊⚋', qualities: ['3m', '5P', '7m'] },
+            '☷': { name: 'Tierra', lines: '⚋⚋⚋', qualities: ['3m', '5d', '7d'] },
+        };
 
-    function togglePopup(id) {
-      const el = document.getElementById(id);
-      el.style.display = el.style.display === 'block' ? 'none' : 'block';
-    }
+        const trigrams = Object.keys(trigramMap);
 
-    function generateTrigrams() {
-      const list = document.getElementById("trigram-list");
-      list.innerHTML = "";
+        function togglePopup(id) {
+            const el = document.getElementById(id);
+            el.style.display = el.style.display === 'block' ? 'none' : 'block';
+        }
 
-      const count = parseInt(document.getElementById("chord-count").value);
-      const groupSize = parseInt(document.getElementById("group-size").value);
+        function generateTrigrams() {
+            const list = document.getElementById("trigram-list");
+            list.innerHTML = "";
 
-      for (let i = 0; i < count; i++) {
-        const randTrigram = trigrams[Math.floor(Math.random() * trigrams.length)];
-        const trigram = trigramMap[randTrigram];
+            const count = parseInt(document.getElementById("chord-count").value);
+            const groupSize = parseInt(document.getElementById("group-size").value);
 
-        const div = document.createElement("div");
-        div.className = "trigram-card";
-        const inputId = `notes-${i}`;
-        div.innerHTML = `
+            for (let i = 0; i < count; i++) {
+                const randTrigram = trigrams[Math.floor(Math.random() * trigrams.length)];
+                const trigram = trigramMap[randTrigram];
+
+                const div = document.createElement("div");
+                div.className = "trigram-card";
+                const inputId = `notes-${i}`;
+                div.innerHTML = `
           <div style="font-size: 2rem;">${randTrigram}</div>
           <div><strong>${trigram.name}</strong></div>
           <div>${trigram.lines}</div>
@@ -145,26 +179,38 @@
           <input id="${inputId}" class="note-input" placeholder="Ej: C E G#" onblur="parseNotes('${inputId}')"/>
           <div id="${inputId}-parsed"></div>
         `;
-        list.appendChild(div);
+                list.appendChild(div);
 
-        if ((i + 1) % groupSize === 0) {
-          const divider = document.createElement("hr");
-          divider.style.width = "100%";
-          divider.style.opacity = 0.2;
-          list.appendChild(divider);
+                if ((i + 1) % groupSize === 0) {
+                    const divider = document.createElement("hr");
+                    divider.style.width = "100%";
+                    divider.style.opacity = 0.2;
+                    list.appendChild(divider);
+                }
+            }
         }
-      }
-    }
 
-    function parseNotes(id) {
-      const input = document.getElementById(id);
-      const parsed = document.getElementById(`${id}-parsed`);
-      const notes = input.value.trim().toUpperCase().split(/\s+/);
-      parsed.innerText = notes.length >= 3 ? `Acorde: ${notes.join(' - ')}` : "";
-    }
+        function parseNotes(id) {
+            const input = document.getElementById(id);
+            const parsed = document.getElementById(`${id}-parsed`);
+            const raw = input.value.trim().toUpperCase();
+            const notes = raw.match(/([A-G](#|B|b)?)/g);
+            if (notes && notes.length === 3) {
+                parsed.innerText = `Acorde construido: ${notes.join(' - ')}`;
+            } else {
+                parsed.innerText = '';
+            }
 
-    // Generar por defecto al cargar
-    generateTrigrams();
-  </script>
+            if (notes && notes.length === 3) {
+                parsed.innerText = `Acorde construido: ${notes.join(' - ')}`;
+            } else {
+                parsed.innerText = '';
+            }
+        }
+
+        // Generar por defecto al cargar
+        generateTrigrams();
+    </script>
 </body>
+
 </html>
